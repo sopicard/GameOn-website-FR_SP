@@ -28,6 +28,8 @@ p {
 
 img {
   padding-right: 1rem;
+  width: auto;
+  height: auto;
 }
 
 .topnav {
@@ -296,7 +298,7 @@ input[data-error]::after {
   left: 21%;
   top: 19%;
 }
-.close {
+.closing-cross {
   position: absolute;
   right: 15px;
   top: 15px;
@@ -306,8 +308,8 @@ input[data-error]::after {
   cursor: pointer;
   transform: scale(0.7);
 }
-.close:before,
-.close:after {
+.closing-cross:before,
+.closing-cross:after {
   position: absolute;
   left: 15px;
   content: " ";
@@ -315,10 +317,10 @@ input[data-error]::after {
   width: 3px;
   background-color: #fff;
 }
-.close:before {
+.closing-cross:before {
   transform: rotate(45deg);
 }
-.close:after {
+.closing-cross:after {
   transform: rotate(-45deg);
 }
 .btn-submit,
