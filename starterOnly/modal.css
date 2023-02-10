@@ -188,9 +188,10 @@ main {
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
+  position: relative;
 }
 
-label, .error{
+label {
   font-family: var(--font-default);
   font-size: 14px;
   font-weight: normal;
@@ -226,11 +227,11 @@ input {
   transition: 0.3s;
 }
 
-.formData[data-error-visible="true"]::after {
+.formData.data-error-visible::after {
   opacity: 1;
 }
 
-.formData[data-error-visible="true"] .text-control {
+.formData.data-error-visible .text-control {
   border: 2px solid #e54858;
 }
 
@@ -507,6 +508,19 @@ input[data-error]::after {
 
 .hero-section > .btn-signup {
   display: none;
+}
+
+#form-is-ok {
+  display: none;
+  color: red;
+  padding: 3em;
+  background: lightgrey;
+  border-radius: 15px;
+  font-size: 20px;
+  position: absolute;
+  z-index: 1;
+  top: 210px;
+  right: 15px;
 }
 
 footer {
