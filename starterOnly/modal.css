@@ -188,7 +188,32 @@ main {
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
-  position: relative;
+  /* position: relative; */
+}
+
+#form-ok {
+  display: none;
+  font-family: var(--font-default);
+  font-size: 36px;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  background: #232323;
+  border-radius: 15px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  padding-top: 1rem;
+}
+
+.p-form-ok {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 50%;
 }
 
 label {
@@ -216,7 +241,7 @@ input {
 
 .formData[data-error]::after {
   content: attr(data-error);
-  font-size: 0.4em;
+  font-size: 0.6em;
   color: #e54858;
   display: block;
   margin-top: 7px;
@@ -317,7 +342,6 @@ input[data-error]::after {
 .closing-cross {
   position: absolute;
   right: 15px;
-  top: 15px;
   width: 32px;
   height: 32px;
   opacity: 1;
@@ -344,7 +368,7 @@ input[data-error]::after {
 }
 
 #btn-submit,
-.btn-signup {
+.btn-signup, #btn-close {
   background: #fe142f;
   display: block;
   margin: 0 auto;
@@ -354,6 +378,10 @@ input[data-error]::after {
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+
+#btn-close {
+  margin-top: 80%;
 }
 
 /* custom select styles */
@@ -508,19 +536,6 @@ input[data-error]::after {
 
 .hero-section > .btn-signup {
   display: none;
-}
-
-#form-is-ok {
-  display: none;
-  color: red;
-  padding: 3em;
-  background: lightgrey;
-  border-radius: 15px;
-  font-size: 20px;
-  position: absolute;
-  z-index: 1;
-  top: 210px;
-  right: 15px;
 }
 
 footer {
