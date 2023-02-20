@@ -15,7 +15,7 @@ const closeElements = document.querySelectorAll(".close")
 const form = document.querySelector(".modal-form")
 const inputsTextControl = document.querySelectorAll(".text-control")
 const radiosDiv = document.querySelector("#radios-div")
-const modalConfirmation = document.querySelector("#form-ok")
+const confirmation = document.querySelector("#form-ok")
 const send = document.querySelector("#btn-submit")
 
 // launch modal event
@@ -27,18 +27,24 @@ function launchModal() {
 }
 
 //close each modals with btn or cross
-for (let i=0; i < closeElements.length; i++) {
-  closeElements[i].addEventListener("click", closeModal)
-}
+// for (let i=0; i < closeElements.length; i++) {
+//   closeElements[i].addEventListener("click", closeModal)
+// }
+
+closeElements.forEach(el => {
+  el.addEventListener("click", closeModal)
+})
 
 function closeModal(event) {
   event.preventDefault()
   const modal = event.target.closest(".modal")
   modal.style.display = "none"
+  confirmation.style.display = "none"
+  form.style.display = "block"
 }
 
 //validation form
-// form.addEventListener("submit", validate)
+//form.addEventListener("submit", validate)
 
 send.addEventListener("click", validate)
 function validate (event){
@@ -68,7 +74,9 @@ function validate (event){
   if (error) {
     return false;
   } else if (!error) {
-    modalConfirmation.style.display = "block";
+    confirmation.style.display = "block"
+    form.style.display = "none"
+    form.reset()
   }
 }
 
