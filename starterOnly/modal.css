@@ -1,7 +1,7 @@
 :root {
   --font-default: "DM Sans", Arial, Helvetica, sans-serif;
   --font-slab: var(--font-default);
-  --modal-duration: 2s;
+  --modal-duration: 1s;
 }
 * {
   box-sizing: border-box;
@@ -81,10 +81,6 @@ p {
   color: #ff0000;
 }
 
-.fa.fa-bars {
-  font-size: larger;
-} 
-
 main {
   font-size: 130%;
   font-weight: bolder;
@@ -139,29 +135,62 @@ main {
 }
 
 .bground {
-  display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   top: 0;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
 }
 
 .content {
   margin: 5% auto;
-  width: 100%;
+  width: 100vw;
   max-width: 500px;
-  animation-name: modalopen;
-  animation-duration: var(--modal-duration);
   background: #232323;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
   color: #fff;
   padding-top: 10px;
+}
+
+.hideModal {
+  z-index: -1;
+  opacity: 0;
+  animation: hide 1s;
+  transform: translateY(0);
+} 
+@keyframes hide {
+  from {
+    transform: translateY(0);
+    z-index: 2;
+    opacity: 1;
+  } to {
+    z-index: -1;
+    transform: translateY(-150px);
+    opacity: 0;
+  }
+}
+
+.showModal {
+  opacity: 1;
+  z-index: 2;
+  animation: show 1s;
+  transform: translateY(0);
+}
+@keyframes show {
+  from {
+    transform: translateY(-150px);
+    opacity: 0;
+    z-index: -1;
+  } to {
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 2;
+  }
 }
 
 .modal-body {
@@ -513,7 +542,7 @@ footer {
 
 @media screen and (max-width: 1105px) {
   .img-logo {
-    font-size: 1.5rem;
+    height: 2.4rem;
   }
   .topnav a {
     font-size: 15px;
@@ -546,6 +575,7 @@ footer {
   .hero-text {
     width: 100%;
     font-size: 1.5rem;
+    margin-top: 30px
   }
   .hero-img img {
     border-radius: 10px;
@@ -563,7 +593,13 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
-  .topnav a {display: none;}
+  .img-logo {
+    height: 1.8rem;
+  }
+  .topnav a {
+    display: none;
+    padding: 0px;
+  }
   .topnav a.icon {
     float: right;
     display: block;
@@ -583,16 +619,41 @@ footer {
     display: flex;
     align-items: center;
   }
+  .fa.fa-bars {
+    font-size: x-large;
+  } 
+  .hero-headline {
+    font-size: 4rem;
+    white-space: normal;
+  }
   .bground {
     background-color: transparent;
   }
   .content {
+    padding-top: 0;
     max-width: 100%;
-    margin-top: 15%;
+    margin-top: 10%;
+  }
+  .modal-body {
+    margin: 0;
+  }
+  .text-control {
+    height: 30px;
+  }
+  label, .text-label {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+  .formData[data-error]::after{
+    margin-top: 5px;
+    margin-bottom: 3px;
   }
 }
 
  @media screen and (max-width: 540px) {
+  .img-logo {
+    height: 1.5rem;
+  }
   .topnav {
     display: flex;
     align-items: center;
@@ -603,9 +664,10 @@ footer {
     display: block;
     padding: 0px;
   }
-  .img-logo {
-    height: 1.5rem;
-  }
+
+  .fa.fa-bars {
+    font-size: larger;
+  } 
   main {
     padding: 0px;
   }
@@ -613,6 +675,7 @@ footer {
     font-size: 2.5rem;
     font-weight: 500;
     white-space: normal;
+    line-height: 3.25rem;
   }
   .hero-content {
     padding: 0px;
@@ -623,18 +686,10 @@ footer {
     font-size: 0.7rem;
     margin-top: 20px;
   }
+  .content {
+    margin-top: 13%;
+  }
   .formData[data-error]::after {
     font-size: 0.4em;
   }
 }
-
-@keyframes modalopen {
-  from {
-    opacity: 0;
-    transform: translateY(-500px);
-  }
-  to {
-    opacity: 1;
-  }
-}
-

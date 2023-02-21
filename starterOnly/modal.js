@@ -18,40 +18,36 @@ const radiosDiv = document.querySelector("#radios-div")
 const confirmation = document.querySelector("#form-ok")
 const send = document.querySelector("#btn-submit")
 
+modalbg.classList.add("hideModal")
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal))
 
-// launch modal form
+// open modal form
 function launchModal() {
-  modalbg.style.display = "block"
+  modalbg.classList.add("showModal")
 }
 
-//close each modals with btn or cross
-// for (let i=0; i < closeElements.length; i++) {
-//   closeElements[i].addEventListener("click", closeModal)
-// }
-
+// close each modals with btn or cross
 closeElements.forEach(el => {
   el.addEventListener("click", closeModal)
 })
 
 function closeModal(event) {
   event.preventDefault()
-  const modal = event.target.closest(".modal")
-  modal.style.display = "none"
+  const modalbg = event.target.closest(".bground")
+  modalbg.classList.remove("showModal")
   confirmation.style.display = "none"
   form.style.display = "block"
 }
 
-//validation form
-//form.addEventListener("submit", validate)
-
+// validation form
 send.addEventListener("click", validate)
 function validate (event){
   event.preventDefault()
   let error = false
 
-  //checking each form's input
+  // checking each form's input
   inputsTextControl.forEach ((input) => {
     const formData = input.parentNode
     if (!input.checkValidity()) {
@@ -62,7 +58,7 @@ function validate (event){
     }
   })
 
-  //checking radios buttons
+  // checking radios buttons
   const isChecked = radiosDiv.querySelector("input:checked")
   if (!isChecked) {
     radiosDiv.classList.add("data-error-visible")
