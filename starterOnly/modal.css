@@ -135,6 +135,7 @@ main {
 }
 
 .bground {
+  display: none;
   position: fixed;
   z-index: 2;
   left: 0;
@@ -157,11 +158,12 @@ main {
   padding-top: 10px;
 }
 
+/* classes and keyframes used for opening and closing modal form  */
 .hideModal {
   z-index: -1;
   opacity: 0;
   animation: hide 1s;
-  transform: translateY(0);
+  transform: translateY(-100%);
 } 
 @keyframes hide {
   from {

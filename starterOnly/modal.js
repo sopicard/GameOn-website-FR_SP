@@ -1,7 +1,7 @@
 function editNav() {
   var x = document.getElementById("myTopnav")
   if (x.className === "topnav") {
-    x.className += " responsive"
+    x.className += "responsive"
   } else {
     x.className = "topnav"
   }
@@ -18,13 +18,12 @@ const radiosDiv = document.querySelector("#radios-div")
 const confirmation = document.querySelector("#form-ok")
 const send = document.querySelector("#btn-submit")
 
-modalbg.classList.add("hideModal")
-
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal))
 
 // open modal form
 function launchModal() {
+  modalbg.style.display = "block"
   modalbg.classList.add("showModal")
 }
 
@@ -37,6 +36,7 @@ function closeModal(event) {
   event.preventDefault()
   const modalbg = event.target.closest(".bground")
   modalbg.classList.remove("showModal")
+  modalbg.classList.add("hideModal")
   confirmation.style.display = "none"
   form.style.display = "block"
 }
