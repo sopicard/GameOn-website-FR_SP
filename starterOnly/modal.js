@@ -18,6 +18,8 @@ const radiosDiv = document.querySelector("#radios-div")
 const confirmation = document.querySelector("#form-ok")
 const send = document.querySelector("#btn-submit")
 
+
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal))
 
@@ -34,11 +36,8 @@ closeElements.forEach(el => {
 
 function closeModal(event) {
   event.preventDefault()
-  const modalbg = event.target.closest(".bground")
   modalbg.classList.remove("showModal")
   modalbg.classList.add("hideModal")
-  confirmation.style.display = "none"
-  form.style.display = "block"
 }
 
 // validation form
@@ -68,8 +67,16 @@ function validate (event){
   }
 
   if (error) {
-    return false;
+    return false
   } else if (!error) {
+    modalbg.addEventListener("animationend", (event) => {
+      confirmation.style.display = "none"
+      form.style.display = "block"
+    },
+    {
+      once:true
+    }
+    )
     confirmation.style.display = "block"
     form.style.display = "none"
     form.reset()

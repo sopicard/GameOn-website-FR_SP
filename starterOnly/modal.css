@@ -140,15 +140,15 @@ main {
   z-index: 2;
   left: 0;
   top: 0;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
 }
 
 .content {
   margin: 5% auto;
-  width: 100vw;
+  width: 100%;
   max-width: 500px;
   background: #232323;
   border-radius: 10px;
@@ -163,35 +163,57 @@ main {
   z-index: -1;
   opacity: 0;
   animation: hide 1s;
-  transform: translateY(-100%);
 } 
+
+.hideModal .content {
+  transform: translateY(-100%);
+  animation: hideTranslate 1s;
+}
+
 @keyframes hide {
   from {
-    transform: translateY(0);
     z-index: 2;
     opacity: 1;
   } to {
     z-index: -1;
-    transform: translateY(-150px);
     opacity: 0;
+  }
+}
+
+@keyframes hideTranslate {
+  from {
+    transform: translateY(0);
+  } to {
+    transform: translateY(-150px);
   }
 }
 
 .showModal {
   opacity: 1;
   z-index: 2;
-  animation: show 1s;
-  transform: translateY(0);
+  animation: show 1s;  
 }
+
+.showModal .content {
+  transform: translateY(0);
+  animation: showTranslate 1s;
+}
+
 @keyframes show {
   from {
-    transform: translateY(-150px);
     opacity: 0;
     z-index: -1;
   } to {
-    transform: translateY(0);
     opacity: 1;
     z-index: 2;
+  }
+}
+
+@keyframes showTranslate {
+  from {
+    transform: translateY(-150px);
+  } to {
+    transform: translateY(0);
   }
 }
 
@@ -369,7 +391,7 @@ input {
 .btn-signup, #btn-close {
   background: #fe142f;
   display: block;
-  margin: 0 auto;
+  margin: 10px auto;
   border-radius: 7px;
   font-size: 1rem;
   padding: 12px 82px;
@@ -634,7 +656,7 @@ footer {
   .content {
     padding-top: 0;
     max-width: 100%;
-    margin-top: 10%;
+    margin-top: 8%;
   }
   .modal-body {
     margin: 0;
@@ -689,7 +711,7 @@ footer {
     margin-top: 20px;
   }
   .content {
-    margin-top: 13%;
+    margin-top: 11%;
   }
   .formData[data-error]::after {
     font-size: 0.4em;
