@@ -40,11 +40,11 @@ p {
 }
 
 .header-logo {
-    float: left;
+  float: left;
 }
 
 .main-navbar {
-    float: right;
+  float: right;
 }
 
 .topnav a {
@@ -266,6 +266,9 @@ input {
   height: 48px;
 }
 
+/* Jason's version
+    .formData[data-error-visible="true"]::after {
+      opacity: 1; */
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.6em;

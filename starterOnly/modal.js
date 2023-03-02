@@ -13,7 +13,6 @@ const modalBtn = document.querySelectorAll(".modal-btn")
 const formData = document.querySelectorAll(".formData")
 const closeElements = document.querySelectorAll(".close")
 const form = document.querySelector(".modal-form")
-const inputsTextControl = document.querySelectorAll(".text-control")
 const radiosDiv = document.querySelector("#radios-div")
 const confirmation = document.querySelector("#form-ok")
 const send = document.querySelector("#btn-submit")
@@ -44,19 +43,46 @@ function closeModal(event) {
 send.addEventListener("click", validate)
 function validate (event){
   event.preventDefault()
+
+  // inputs to check
+  const formInputs = [
+    document.querySelector("#first"),
+    document.querySelector("#last"),
+    document.querySelector("#email"),
+    document.querySelector("#quantity"),
+    document.querySelector("#birthdate"),
+    document.querySelector("#checkbox1"),
+  ]
+
   let error = false
 
-  // checking each form's input
-  inputsTextControl.forEach ((input) => {
+  // function that checks the validity of an input
+  const checkValidity = (input) => {
     const formData = input.parentNode
-    if (!input.checkValidity()) {
-      formData.classList.add("data-error-visible")  
-      error = true 
+    if (input.type === "text" && input.value.trim().length < 2) {
+      formData.classList.add("data-error-visible")
+      error = true
+      return false
+    } else if (
+      (input.type === "email" || input.type === "number" || input.type === "date") &&
+      (input.value === "" || !input.checkValidity())
+    ) {
+      formData.classList.add("data-error-visible")
+      error = true
+      return false
+    } else if (input.type === "checkbox" && !input.checked) {
+      formData.classList.add("data-error-visible")
+      error = true
+      return false
     } else {
       formData.classList.remove("data-error-visible")
+      return true
     }
-  })
+  }
 
+  // checking each input
+  formInputs.forEach(checkValidity)
+  
   // checking radios buttons
   const isChecked = radiosDiv.querySelector("input:checked")
   if (!isChecked) {
@@ -69,7 +95,7 @@ function validate (event){
   if (error) {
     return false
   } else if (!error) {
-    modalbg.addEventListener("animationend", (event) => {
+    modalbg.addEventListener("animationend", () => {
       confirmation.style.display = "none"
       form.style.display = "block"
     },
@@ -82,6 +108,8 @@ function validate (event){
     form.reset()
   }
 }
+
+
 
 
 
