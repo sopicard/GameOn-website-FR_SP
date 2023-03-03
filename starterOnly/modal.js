@@ -13,7 +13,6 @@ const modalBtn = document.querySelectorAll(".modal-btn")
 const closeElements = document.querySelectorAll(".close")
 const form = document.querySelector(".modal-form")
 const formData = document.querySelector(".formData")
-const input = document.querySelector(".text-control")
 const radiosDiv = document.querySelector("#radios-div")
 const confirmation = document.querySelector("#form-ok")
 const send = document.querySelector("#btn-submit")
@@ -46,8 +45,9 @@ function closeModal(event) {
   modalbg.classList.add("hideModal")
 }
 
-// function that checks the validity of an input
+// function that checks validity of an input
 function validationCheck (input) {
+  const formData = input.parentNode
   let isValid = true
 
   if (input.type === "text" && input.value.trim().length < 2) {
@@ -65,16 +65,22 @@ function validationCheck (input) {
     isValid = false
   } else if (input.type === "checkbox" && !input.checked) {
     isValid = false
-  } else {
-    isValid = true
   }
+
+  if (!isValid) {
+    formData.classList.add("data-error-visible")
+  } else {
+    formData.classList.remove("data-error-visible")
+  }
+
+  return isValid
 }
 
 // VALIDATION FORM
 function validate (event){
   event.preventDefault()
   let error = false
-  const formData = input.parentNode
+  let isValid = true
 
   // checking each input
   formInputs.forEach(input => {
@@ -82,12 +88,6 @@ function validate (event){
       isValid = false
     }
   })
-
-  if (!isValid) {
-    formData.classList.add("data-error-visible");
-  } else {
-    formData.classList.remove("data-error-visible");
-  }
 
   // checking radios buttons
   const isChecked = radiosDiv.querySelector("input:checked")
