@@ -48,31 +48,25 @@ function closeModal(event) {
 
 // function that checks the validity of an input
 function validationCheck (input) {
-  let isValid = false
+  let isValid = true
 
   if (input.type === "text" && input.value.trim().length < 2) {
-    isValid = true
-    // return false
+    isValid = false
   } else if (input.type === "email") {
       const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       const val = input.value
       if (!regex.test(val)) {
-        isValid = true
-        // return false
+        isValid = false
       } 
   } else if (input.type === "number" && 
     (input.value === "" || parseInt(input.value) < 0 || parseInt(input.value) > 99)) {
-    isValid = true
-    // return false
-  } else if (input.type === "date" && input.value === "") {
-    isValid = true
-    // return false
-  } else if (input.type === "checkbox" && !input.checked) {
-    isValid = true
-    // return false
-  } else {
     isValid = false
-  // return true
+  } else if (input.type === "date" && input.value === "") {
+    isValid = false
+  } else if (input.type === "checkbox" && !input.checked) {
+    isValid = false
+  } else {
+    isValid = true
   }
 }
 
@@ -80,17 +74,16 @@ function validationCheck (input) {
 function validate (event){
   event.preventDefault()
   let error = false
-  let isNotValid = false
   const formData = input.parentNode
 
   // checking each input
   formInputs.forEach(input => {
     if (!validationCheck(input)) {
-      isNotValid = true
+      isValid = false
     }
   })
 
-  if (isNotValid) {
+  if (!isValid) {
     formData.classList.add("data-error-visible");
   } else {
     formData.classList.remove("data-error-visible");
@@ -105,9 +98,9 @@ function validate (event){
     radiosDiv.classList.remove("data-error-visible")
   }
 
-  if (error || isNotValid) {
+  if (error || !isValid) {
     return false
-  } else if (!error || !isNotValid) {
+  } else if (!error || isValid) {
     modalbg.addEventListener("animationend", () => {
       confirmation.style.display = "none"
       form.style.display = "block"
