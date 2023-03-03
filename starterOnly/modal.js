@@ -13,7 +13,8 @@ const modalBtn = document.querySelectorAll(".modal-btn")
 const closeElements = document.querySelectorAll(".close")
 const form = document.querySelector(".modal-form")
 const formData = document.querySelector(".formData")
-const input = document.querySelector(".text-control")
+const input = document.querySelector(".text-control") //TODO: attention les éléments avec la class text-control sont plusieurs, 
+// ici tu ne viens chercher que le premier, je pense que tu n'a pas besoin de cette variable
 const radiosDiv = document.querySelector("#radios-div")
 const confirmation = document.querySelector("#form-ok")
 const send = document.querySelector("#btn-submit")
@@ -48,6 +49,7 @@ function closeModal(event) {
 
 // function that checks the validity of an input
 function validationCheck (input) {
+  const formData = input.parentNode // TODO: Ici je viens chercher le parent formData
   let isValid = true
 
   if (input.type === "text" && input.value.trim().length < 2) {
@@ -65,16 +67,28 @@ function validationCheck (input) {
     isValid = false
   } else if (input.type === "checkbox" && !input.checked) {
     isValid = false
-  } else {
-    isValid = true
   }
+
+  // TODO: ici je viens afficher ou cacher le message d'erreur pour l'input
+  if (isValid) {
+    formData.classList.remove("data-error-visible")
+  } else if (!isValid) {
+    formData.classList.add("data-error-visible")
+  }
+
+  return isValid // TODO: Je retourne l'information si l'input est valide, cela sera utile à la fonction validate() 
+  // pour savoir si tous les inputs sont valides et donc que le formulaire est valide
 }
 
 // VALIDATION FORM
 function validate (event){
   event.preventDefault()
   let error = false
-  const formData = input.parentNode
+  let isValid = true // TODO: Il faut donner une valeur initiale à isValid
+  // const formData = input.parentNode
+  // TODO: ici ta variable 'input' fait référence à la variable globale qui correspond au premier élément avec la class text-control
+  // D'où ton bug qui où les erreurs ne s'affiche toujours que pour le premier input de la page
+  // Selon moi il ne faut pas venir chercher formData ici mais plutôt dans la fonction validationCheck
 
   // checking each input
   formInputs.forEach(input => {
@@ -83,11 +97,14 @@ function validate (event){
     }
   })
 
-  if (!isValid) {
-    formData.classList.add("data-error-visible");
-  } else {
-    formData.classList.remove("data-error-visible");
-  }
+  // TODO: Nous sommes dans la fonction validate() qui s'applique sur le formulaire et non sur un input particulier
+  // du coup la variable isValid doit nous dire si le formulaire est valide, cela ne concerne pas un input, 
+  // Ce n'est pas au niveau du formulaire que l'on gère l'affichage du message d'erreur mais au niveau d'un input en particulier, cf fonction checkValidation()
+  // if (!isValid) {
+  //   formData.classList.add("data-error-visible");
+  // } else {
+  //   formData.classList.remove("data-error-visible");
+  // }
 
   // checking radios buttons
   const isChecked = radiosDiv.querySelector("input:checked")
