@@ -10,14 +10,21 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground")
 const modalBtn = document.querySelectorAll(".modal-btn")
-const formData = document.querySelectorAll(".formData")
 const closeElements = document.querySelectorAll(".close")
 const form = document.querySelector(".modal-form")
+const formData = document.querySelector(".formData")
+const input = document.querySelector(".text-control")
 const radiosDiv = document.querySelector("#radios-div")
 const confirmation = document.querySelector("#form-ok")
 const send = document.querySelector("#btn-submit")
-
-
+const formInputs = [
+  document.querySelector("#first"),
+  document.querySelector("#last"),
+  document.querySelector("#email"),
+  document.querySelector("#quantity"),
+  document.querySelector("#birthdate"),
+  document.querySelector("#checkbox1"),
+]
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal))
@@ -39,50 +46,56 @@ function closeModal(event) {
   modalbg.classList.add("hideModal")
 }
 
-// validation form
-send.addEventListener("click", validate)
+// function that checks the validity of an input
+function validationCheck (input) {
+  let isValid = false
+
+  if (input.type === "text" && input.value.trim().length < 2) {
+    isValid = true
+    // return false
+  } else if (input.type === "email") {
+      const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      const val = input.value
+      if (!regex.test(val)) {
+        isValid = true
+        // return false
+      } 
+  } else if (input.type === "number" && 
+    (input.value === "" || parseInt(input.value) < 0 || parseInt(input.value) > 99)) {
+    isValid = true
+    // return false
+  } else if (input.type === "date" && input.value === "") {
+    isValid = true
+    // return false
+  } else if (input.type === "checkbox" && !input.checked) {
+    isValid = true
+    // return false
+  } else {
+    isValid = false
+  // return true
+  }
+}
+
+// VALIDATION FORM
 function validate (event){
   event.preventDefault()
-
-  // inputs to check
-  const formInputs = [
-    document.querySelector("#first"),
-    document.querySelector("#last"),
-    document.querySelector("#email"),
-    document.querySelector("#quantity"),
-    document.querySelector("#birthdate"),
-    document.querySelector("#checkbox1"),
-  ]
-
   let error = false
-
-  // function that checks the validity of an input
-  const checkValidity = (input) => {
-    const formData = input.parentNode
-    if (input.type === "text" && input.value.trim().length < 2) {
-      formData.classList.add("data-error-visible")
-      error = true
-      return false
-    } else if (
-      (input.type === "email" || input.type === "number" || input.type === "date") &&
-      (input.value === "" || !input.checkValidity())
-    ) {
-      formData.classList.add("data-error-visible")
-      error = true
-      return false
-    } else if (input.type === "checkbox" && !input.checked) {
-      formData.classList.add("data-error-visible")
-      error = true
-      return false
-    } else {
-      formData.classList.remove("data-error-visible")
-      return true
-    }
-  }
+  let isNotValid = false
+  const formData = input.parentNode
 
   // checking each input
-  formInputs.forEach(checkValidity)
-  
+  formInputs.forEach(input => {
+    if (!validationCheck(input)) {
+      isNotValid = true
+    }
+  })
+
+  if (isNotValid) {
+    formData.classList.add("data-error-visible");
+  } else {
+    formData.classList.remove("data-error-visible");
+  }
+
   // checking radios buttons
   const isChecked = radiosDiv.querySelector("input:checked")
   if (!isChecked) {
@@ -92,9 +105,9 @@ function validate (event){
     radiosDiv.classList.remove("data-error-visible")
   }
 
-  if (error) {
+  if (error || isNotValid) {
     return false
-  } else if (!error) {
+  } else if (!error || !isNotValid) {
     modalbg.addEventListener("animationend", () => {
       confirmation.style.display = "none"
       form.style.display = "block"
@@ -109,7 +122,4 @@ function validate (event){
   }
 }
 
-
-
-
-
+send.addEventListener("click", validate)
